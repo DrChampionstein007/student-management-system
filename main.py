@@ -13,7 +13,8 @@ def main():
         print("4. Update Student")
         print("5. Delete Student")
         print("6. Generate 100 Dummy Students")
-        print("7. Exit")
+        print("7. Export Students to CSV")
+        print("8. Exit")
 
         choice = input("\nEnter your choice: ")
 
@@ -102,6 +103,9 @@ def main():
             db.generate_dummy_students()
 
         elif choice == "7":
+            db.export_to_csv() 
+            
+        elif choice == "8":
             db.close()
             print("Goodbye!")
             break

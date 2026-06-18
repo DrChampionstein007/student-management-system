@@ -131,7 +131,39 @@ class Database:
 
         self.connection.commit()
         print(f"{count} dummy students generated successfully.")
-    
+
+    def export_to_csv(self):
+        import csv
+
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT * FROM students")
+
+        rows = cursor.fetchall()
+
+        with open("students_export.csv", "w", newline="", encoding="utf-8") as file:
+            writer = csv.writer(file)
+
+            writer.writerow([
+                "Student ID",
+                "Name",
+                "Department",
+                "Semester",
+                "Email",
+                "Phone"
+            ])
+
+            for row in rows:
+                writer.writerow([
+                    row["student_id"],
+                    row["name"],
+                    row["department"],
+                    row["semester"],
+                    row["email"],
+                    row["phone"]
+                ])
+
+        print("Student data exported to students_export.csv successfully.")
+
     def close(self):
         if self.connection:
             self.connection.close()
