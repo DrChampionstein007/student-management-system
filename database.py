@@ -1,3 +1,6 @@
+from faker import Faker
+import random
+
 import sqlite3
 from sqlite3 import Error
 
@@ -97,6 +100,38 @@ class Database:
 
         self.connection.commit()
 
+    def generate_dummy_students(self, count=100):
+        fake = Faker()
+
+        departments = ["IT", "CSE", "AIML", "ECE", "EE"]
+
+        cursor = self.connection.cursor()
+
+        for i in range(count):
+            student_id = f"STU{i+1:03}"
+
+            try:
+                cursor.execute(
+                    """
+                    INSERT INTO students
+                    (student_id, name, department, semester, email, phone)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        student_id,
+                        fake.name(),
+                        random.choice(departments),
+                        random.randint(1, 8),
+                        fake.unique.email(),
+                        fake.phone_number()[:10]
+                    )
+                )
+            except:
+                pass
+
+        self.connection.commit()
+        print(f"{count} dummy students generated successfully.")
+    
     def close(self):
         if self.connection:
             self.connection.close()

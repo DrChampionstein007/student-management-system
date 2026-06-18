@@ -12,7 +12,8 @@ def main():
         print("3. Search Student")
         print("4. Update Student")
         print("5. Delete Student")
-        print("6. Exit")
+        print("6. Generate 100 Dummy Students")
+        print("7. Exit")
 
         choice = input("\nEnter your choice: ")
 
@@ -98,6 +99,9 @@ def main():
             db.delete_student(student_id)
 
         elif choice == "6":
+            db.generate_dummy_students()
+
+        elif choice == "7":
             db.close()
             print("Goodbye!")
             break
